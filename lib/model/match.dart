@@ -1,6 +1,6 @@
 import 'package:championship/model/team.dart';
 
-class Match {
+class MatchInfo {
   String _info;
   Team _homeTeam;
   Team _awayTeam;
@@ -8,7 +8,7 @@ class Match {
   int _awayScore;
 
 
-  Match({String info, homeTeam, awayTeam, homeScore, awayScore})
+  MatchInfo({String info, homeTeam, awayTeam, homeScore, awayScore})
       : _info = info,
         _homeTeam = homeTeam,
         _awayTeam = awayTeam,

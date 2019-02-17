@@ -23,7 +23,7 @@ class RoundWidget extends StatelessWidget {
 
 
   Widget _buildListView(BuildContext context, int index) {
-    Match match = _round.matches[index];
+    MatchInfo match = _round.matches[index];
     return AspectRatio(
       aspectRatio: 1.4,
       child: MatchWidget(

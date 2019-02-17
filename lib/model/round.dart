@@ -1,8 +1,8 @@
 import 'package:championship/model/match.dart';
 class Round{
-  List<Match> _matches;
+  List<MatchInfo> _matches;
 
-  List<Match> get matches => _matches;
+  List<MatchInfo> get matches => _matches;
 
 
   Round(this._matches);

@@ -30,12 +30,12 @@ List<Round> _buildLeagueTournament(TournamentSetup setup) {
   List<Round> rounds = [];
 
   for (int i = 1; i < size; i++) {
-    var roundMatches = <Match>[];
+    var roundMatches = <MatchInfo>[];
     for (int j = 0; j < mid; j++) {
       var home = teams[j];
       var away = teams[(size - 1) - j];
       var match =
-          Match(homeTeam: home, awayTeam: away, homeScore: 0, awayScore: 0);
+          MatchInfo(homeTeam: home, awayTeam: away, homeScore: 0, awayScore: 0);
       print('${home.teamName} x ${away.teamName}');
       roundMatches.add(match);
     }
@@ -53,7 +53,7 @@ List<Round> _cleanUp(List<Round> rounds) {
     var matches = r.matches;
     int index = 0;
     for (int i = 0; i < matches.length; i++) {
-      Match m = matches[i];
+      MatchInfo m = matches[i];
       if (m.homeTeam == _dummyTeam || m.awayTeam == _dummyTeam) {
         matches.removeAt(i);
       } else {
