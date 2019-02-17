@@ -1,4 +1,4 @@
-import 'package:championship/model/match.dart';
+import 'package:championship/model/match_info.dart';
 class Round{
   List<MatchInfo> _matches;
 

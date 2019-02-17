@@ -1,16 +1,11 @@
 class Team{
   String _teamName;
-  double _attackPower;
-  double _defensePower;
+  double _teamPower;
 
 
+  Team(this._teamName, this._teamPower);
 
-
-  Team(this._teamName, this._attackPower, this._defensePower);
-
-  double get attackPower => _attackPower;
-
-  double get defensePower => _defensePower;
+  double get teamPower => _teamPower;
 
   String get teamName => _teamName;
 

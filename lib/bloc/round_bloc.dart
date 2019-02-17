@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc_pattern/bloc_pattern.dart';
-import 'package:championship/model/match.dart';
+import 'package:championship/model/match_info.dart';
 import 'package:championship/model/round.dart';
 import 'package:championship/model/team.dart';
 import 'package:championship/model/tournament_setup.dart';

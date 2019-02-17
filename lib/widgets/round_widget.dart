@@ -1,7 +1,7 @@
 import 'package:championship/model/round.dart';
 import 'package:championship/widgets/match_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:championship/model/match.dart';
+import 'package:championship/model/match_info.dart';
 
 class RoundWidget extends StatelessWidget {
   final Round _round;

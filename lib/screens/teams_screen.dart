@@ -157,7 +157,7 @@ class _TeamsScreenState extends State<TeamsScreen> {
     var team = _teamList[index];
 
     return _teamTileItem(
-        team.teamName, team.attackPower.toStringAsFixed(2), index);
+        team.teamName, team.teamPower.toStringAsFixed(2), index);
   }
 
   void confirmTeams(BuildContext context) {
@@ -185,7 +185,7 @@ class _TeamsScreenState extends State<TeamsScreen> {
     if (_formKey.currentState.validate()) {
       setState(() {
         _teamList.insert(
-            0, Team(_inputTeamController.text, _attackPower.truncateToDouble(), 70));
+            0, Team(_inputTeamController.text, _attackPower.truncateToDouble(), ));
         _attackPower = 70;
         _inputTeamController.clear();
       });
@@ -223,26 +223,26 @@ class _TeamsScreenState extends State<TeamsScreen> {
 
   List<Team> _fakeTeamList() {
     return [
-      Team("Grêmio", 99, 70),
-      Team("Internacional", 79, 70),
-      Team("Flamengo", 90, 70),
-      Team("Fluminense", 45, 70),
-      Team("Vasco", 45, 70),
-      Team("Botafogo", 45, 70),
-      Team("Palmeiras", 95, 70),
-      Team("São Paulo", 79, 70),
-      Team("Santos", 45, 70),
-      Team("Corinthians", 45, 70),
-      Team("Ceará", 45, 70),
-      Team("Bahia", 45, 70),
-      Team("Vitória", 45, 70),
-      Team("Chapecoense", 45, 70),
-      Team("Cruzeiro", 45, 70),
-      Team("Atlético Mineiro", 45, 70),
-      Team("América Mineiro", 45, 70),
-      Team("Atlético Paranaense", 45, 70),
-      Team("Paraná", 45, 70),
-      Team("Sport", 45, 70),
+      Team("Grêmio", 99, ),
+      Team("Internacional", 79, ),
+      Team("Flamengo", 90, ),
+      Team("Fluminense", 45, ),
+      Team("Vasco", 45, ),
+      Team("Botafogo", 45, ),
+      Team("Palmeiras", 95, ),
+      Team("São Paulo", 79, ),
+      Team("Santos", 45, ),
+      Team("Corinthians", 45, ),
+      Team("Ceará", 45, ),
+      Team("Bahia", 45, ),
+      Team("Vitória", 45, ),
+      Team("Chapecoense", 45, ),
+      Team("Cruzeiro", 45, ),
+      Team("Atlético Mineiro", 45, ),
+      Team("América Mineiro", 45, ),
+      Team("Atlético Paranaense", 45, ),
+      Team("Paraná", 45, ),
+      Team("Sport", 45, ),
     ];
   }
 }

@@ -23,6 +23,12 @@ class MatchInfo {
 
   int get homeScore => _homeScore;
 
+
+  updateScores(homeTeamScore, awayTeamScore){
+    _homeScore = homeTeamScore;
+    _awayScore = awayTeamScore;
+  }
+
   String get info => _info;
 
 
@@ -34,4 +40,5 @@ class MatchInfo {
   String toString() {
     return 'Match{_homeTeam: $_homeTeam, _awayTeam: $_awayTeam}';
   }
+
 }

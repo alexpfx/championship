@@ -1,4 +1,4 @@
-import 'package:championship/model/match.dart';
+import 'package:championship/model/match_info.dart';
 import 'package:championship/model/round.dart';
 import 'package:championship/model/team.dart';
 import 'package:championship/model/tournament_setup.dart';
@@ -7,7 +7,7 @@ List<Round> _buildGroupTournament(TournamentSetup setup) {
   return [];
 }
 
-Team _dummyTeam = Team(null, null, null);
+Team _dummyTeam = Team(null, null);
 
 List<Round> buildTournament(TournamentSetup setup) {
   if (TournamentType.league == setup.type) {

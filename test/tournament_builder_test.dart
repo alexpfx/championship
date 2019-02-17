@@ -115,11 +115,11 @@ void main() {
 
   test('buildLeagueTournament3', () {
     var teams = [
-      Team('Gremio', 100, 70),
-      Team('Inter', 99, 70),
-      Team('Fluminense', 98, 70),
-      Team('Avai', 96, 70),
-      Team('Flamengo', 97, 70),
+      Team('Gremio', 100),
+      Team('Inter', 99),
+      Team('Fluminense', 98),
+      Team('Avai', 96),
+      Team('Flamengo', 97),
 
 //      Team('Tubarao', 93)
     ];
