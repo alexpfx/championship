@@ -83,7 +83,10 @@ class _RoundsScreenState extends State<RoundsScreen> {
                   decoration:
                       BoxDecoration(borderRadius: BorderRadius.circular(2)),
                   child: FlatButton.icon(
-                      onPressed: () {},
+                      onPressed: () {
+
+
+                      },
                       icon: Icon(Icons.play_arrow),
                       label: Text("Simulate", style: defaultTextStyle)))
             ],

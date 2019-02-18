@@ -1,0 +1,1 @@
+- adicionar minuto em que foi o gol

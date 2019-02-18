@@ -1,8 +1,9 @@
 import 'package:championship/model/match_info.dart';
 
-class MatchResult {
+class MatchEvent {
   int _homeTeamScore;
   int _awayTeamScore;
+  int _minute;
 
   MatchInfo _match;
 
@@ -14,7 +15,10 @@ class MatchResult {
 
   int get awayTeamScore => _awayTeamScore;
 
-  MatchResult(this._homeTeamScore, this._awayTeamScore, this._match);
+  int get minute => _minute;
+
+
+  MatchEvent(this._homeTeamScore, this._awayTeamScore, this._match, this._minute);
 
   MatchInfo get match => _match;
 

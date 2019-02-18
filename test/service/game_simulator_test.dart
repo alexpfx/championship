@@ -16,8 +16,23 @@ void main() {
   });
 
   test("simulate", () {
-    gameSimulator.startSimulation();
+    gameSimulator.startSimulation((e) => print(e), 90);
 
-    gameSimulator.startSimulation((e) => e);
+    for (int i = 0; i < 90; i++) {
+      gameSimulator.step();
+    }
+
+  });
+
+  test("callwhengamefinish", () {
+    gameSimulator.startSimulation((e) => print(e), 90);
+
+    while(gameSimulator.step()) {
+      // run until end
+    }
+
+    expect(() => gameSimulator.step(), throwsA(TypeMatcher<StateError>()));
+
+
   });
 }

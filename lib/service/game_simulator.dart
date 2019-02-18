@@ -9,7 +9,7 @@ class GameSimulator {
   static const delta = 0.01;
   static const randomWeight = 0.9;
   static const powerWeight = 0.5;
-  static const totalMinutes = 90;
+
   static List<GameStatus> _order = [
     GameStatus.goal,
     GameStatus.lastDefense,
@@ -19,45 +19,64 @@ class GameSimulator {
     GameStatus.changeTeams
   ];
 
+  int totalMinutes;
   GameStatus _gameStatus = GameStatus.neutral;
-  MatchResult _matchResult;
+  MatchEvent _matchEvent;
   MatchInfo _match;
 
   math.Random _random = math.Random(DateTime.now().millisecondsSinceEpoch);
 
   Team _attacker;
   Team _defender;
+  int currentTime = 0;
+
+  Function(MatchEvent) _matchEventCallback;
 
   GameSimulator(this._match);
 
-  startSimulation([Function(MatchResult) goalCallback]) {
-    _matchResult = MatchResult(0, 0, _match);
+  startSimulation(Function(MatchEvent) matchEventCallback, int minutes) {
+    totalMinutes = minutes;
+    this._matchEventCallback = matchEventCallback;
+    _matchEvent = MatchEvent(0, 0, _match, 0);
 
     Team homeTeam = _match.homeTeam;
     Team awayTeam = _match.awayTeam;
 
     chooseSides(homeTeam, awayTeam);
+  }
 
-    for (int i = 0; i < totalMinutes; i++) {
-      _gameStatus = _simulate(_attacker, _defender);
+  _simulate() {
+    _gameStatus = _updateStatus(_attacker, _defender);
 
-      if (GameStatus.goal == _gameStatus) {
-        _sendGoal(_attacker, goalCallback);
-      }
-
-      if (GameStatus.changeTeams == _gameStatus ||
-          GameStatus.goal == _gameStatus) {
-        changeBallControll();
-
-        _gameStatus = GameStatus.neutral;
-      }
+    if (GameStatus.goal == _gameStatus) {
+      _sendGoal(_attacker);
     }
 
-    _matchResult.finishGame();
-    print(_matchResult);
+    if (GameStatus.changeTeams == _gameStatus ||
+        GameStatus.goal == _gameStatus) {
+      changeBallControll();
 
-//    print("media casa: ${goals[homeTeam.teamName] / (totalMinutes / 90)}", );
-//    print("media fora: ${goals[awayTeam.teamName] / (totalMinutes / 90)}", );
+      _gameStatus = GameStatus.neutral;
+    }
+  }
+
+  canStep() {
+    return !_matchEvent.isFinished;
+  }
+
+  bool step() {
+    if (!canStep()) {
+      throw StateError("Game is already finish. ");
+    }
+
+    currentTime++;
+    _simulate();
+    if (currentTime >= totalMinutes) {
+      _matchEvent.finishGame();
+      _matchEventCallback(_matchEvent);
+      return false;
+    }
+    return true;
   }
 
   void changeBallControll() {
@@ -66,7 +85,7 @@ class GameSimulator {
     _attacker = temp;
   }
 
-  GameStatus _simulate(Team attacker, Team defender) {
+  GameStatus _updateStatus(Team attacker, Team defender) {
     double rAtt = (_random.nextInt(9) + 1).toDouble() / 10;
     double at = rAtt * randomWeight +
         (attacker.teamPower / 100) * _gameStatus.attackInfluence * powerWeight;
@@ -97,15 +116,13 @@ class GameSimulator {
 
   Map<String, int> goals = {};
 
-  void _sendGoal(Team attacker, [Function(MatchResult) goalCallback]) {
+  void _sendGoal(Team attacker) {
     if (attacker == _match.homeTeam) {
-      _matchResult.addHomeScore();
+      _matchEvent.addHomeScore();
     } else {
-      _matchResult.addAwayScore();
+      _matchEvent.addAwayScore();
     }
-    if (goalCallback != null) {
-      goalCallback(_matchResult);
-    }
+    _matchEventCallback(_matchEvent);
   }
 
   void chooseSides(Team homeTeam, Team awayTeam) {
