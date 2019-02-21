@@ -1,3 +1,5 @@
+import 'package:bloc_pattern/bloc_pattern.dart';
+import 'package:championship/bloc/match_simulator_bloc.dart';
 import 'package:championship/model/round.dart';
 import 'package:championship/widgets/match_widget.dart';
 import 'package:flutter/material.dart';
@@ -21,17 +23,13 @@ class RoundWidget extends StatelessWidget {
     );
   }
 
-
   Widget _buildListView(BuildContext context, int index) {
+
     MatchInfo match = _round.matches[index];
+    match.info = "Match ${index + 1} of ${_round.matches.length}";
     return AspectRatio(
       aspectRatio: 1.4,
-      child: MatchWidget(
-          "Match ${index + 1} of ${_round.matches.length}",
-          match.homeTeam.teamName,
-          match.awayTeam.teamName,
-          match.homeScore.toString(),
-          match.awayScore.toString()),
+      child: MatchWidget(match),
     );
   }
 }

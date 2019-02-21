@@ -1,91 +1,113 @@
+import 'package:bloc_pattern/bloc_pattern.dart';
+import 'package:championship/bloc/match_simulator_bloc.dart';
+import 'package:championship/model/match_info.dart';
+import 'package:championship/model/match_result.dart';
+import 'package:championship/smodel/match_model.dart';
 import 'package:flutter/material.dart';
+import 'package:scoped_model/scoped_model.dart';
 
-class MatchWidget extends StatefulWidget {
-  const MatchWidget(this.matchName, this.homeTeam, this.awayTeam,
-      this.homeScore, this.awayScore);
+class MatchWidget extends StatelessWidget {
+  final MatchInfo _matchInfo;
 
-  @override
-  _MatchWidgetState createState() => _MatchWidgetState();
+  MatchWidget(this._matchInfo);
 
-  final String matchName;
-  final String homeTeam;
-  final String awayTeam;
-  final String homeScore;
-  final String awayScore;
-}
-
-class _MatchWidgetState extends State<MatchWidget> {
   @override
   Widget build(BuildContext context) {
+    return ScopedModel<MatchModel>(
+      model: new MatchModel(_matchInfo),
+      child: Card(
+        child: ScopedModelDescendant<MatchModel>(
+          builder: _buildModel,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildModel(BuildContext context, Widget child, MatchModel model) {
     const horizontalPadding = 16.0;
     const verticalPadding = 16.0;
 
-    return Card(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          Container(
-            decoration: BoxDecoration(color: Colors.black54),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                  horizontal: horizontalPadding, vertical: 8),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    widget.matchName,
-                    style: TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.bold),
+    MatchInfo matchInfo = model.matchInfo;
+    MatchEvent lastEvent = model.lastEvent;
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        Container(
+          decoration: BoxDecoration(color: Colors.black54),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                IconButton(
+                  padding: EdgeInsets.only(right: 16),
+                  onPressed: () {
+                    model.startSimulation(90);
+
+//                    BlocProviderList.of<MatchSimulatorBloc>(context)
+//                        .inMatchInfo
+//                        .add(matchInfo);
+
+                  },
+                  icon: Icon(
+                    Icons.play_arrow,
+                    color: Colors.white,
                   ),
-                ],
-              ),
+                ),
+                Text(
+                  matchInfo.info,
+                  style: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.bold),
+                ),
+              ],
             ),
           ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                  horizontal: horizontalPadding, vertical: verticalPadding),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Expanded(
-                    child: Text(
-                      widget.homeTeam,
-                      textAlign: TextAlign.start,
-                    ),
-                  ),
-                  Expanded(
-                    child: Text(
-                      widget.homeScore,
-                      textAlign: TextAlign.end,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Padding(
+        ),
+        Expanded(
+          child: Padding(
             padding: const EdgeInsets.symmetric(
                 horizontal: horizontalPadding, vertical: verticalPadding),
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Expanded(
                   child: Text(
-                    widget.awayTeam,
+                    matchInfo.homeTeam.teamName,
                     textAlign: TextAlign.start,
                   ),
                 ),
                 Expanded(
                   child: Text(
-                    widget.awayScore,
+                    lastEvent?.homeTeamScore?.toString() ?? "0",
                     textAlign: TextAlign.end,
                   ),
                 ),
               ],
             ),
-          )
-        ],
-      ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(
+              horizontal: horizontalPadding, vertical: verticalPadding),
+          child: Row(
+            children: <Widget>[
+              Expanded(
+                child: Text(
+                  matchInfo.awayTeam.teamName,
+                  textAlign: TextAlign.start,
+                ),
+              ),
+              Expanded(
+                child: Text(
+                  lastEvent?.awayTeamScore?.toString() ?? "0",
+                  textAlign: TextAlign.end,
+                ),
+              ),
+            ],
+          ),
+        )
+      ],
     );
   }
 }

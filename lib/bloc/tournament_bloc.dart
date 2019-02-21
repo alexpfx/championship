@@ -1,17 +1,14 @@
 import 'dart:async';
 
 import 'package:bloc_pattern/bloc_pattern.dart';
-import 'package:championship/model/match_info.dart';
 import 'package:championship/model/round.dart';
-import 'package:championship/model/team.dart';
 import 'package:championship/model/tournament_setup.dart';
-
 import 'package:championship/tournament_builder.dart';
 
 class TournamentBloc implements BlocBase {
   var _controller = StreamController<List<Round>>();
 
-  Stream<List<Round>> get outRoundCreator => _controller.stream;
+  Stream<List<Round>> get outRoundCreator => _controller.stream.asBroadcastStream();
 
   StreamController<TournamentSetup> _inputController =
       StreamController<TournamentSetup>();
@@ -25,7 +22,7 @@ class TournamentBloc implements BlocBase {
   }
 
   TournamentBloc() {
-    _inputController.stream.listen(_tournamentSetup);
+    _inputController.stream.asBroadcastStream().listen(_tournamentSetup);
   }
 
   void _tournamentSetup(TournamentSetup setup) {

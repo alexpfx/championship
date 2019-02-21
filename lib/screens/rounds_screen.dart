@@ -1,5 +1,6 @@
 import 'package:bloc_pattern/bloc_pattern.dart';
-import 'package:championship/bloc/round_bloc.dart';
+import 'package:championship/bloc/match_simulator_bloc.dart';
+import 'package:championship/bloc/tournament_bloc.dart';
 import 'package:championship/model/round.dart';
 import 'package:championship/model/tournament_setup.dart';
 import 'package:championship/widgets/round_widget.dart';
@@ -17,8 +18,9 @@ class RoundsScreen extends StatefulWidget {
 class _RoundsScreenState extends State<RoundsScreen> {
   @override
   Widget build(BuildContext context) {
-    var provider = BlocProvider.of<TournamentBloc>(context);
-    provider.inputTournamentSetup.add(widget.setup);
+    var tournamentProvider = BlocProviderList.of<TournamentBloc>(context);
+
+    tournamentProvider.inputTournamentSetup.add(widget.setup);
 
     return Scaffold(
       appBar: AppBar(
@@ -37,8 +39,11 @@ class _RoundsScreenState extends State<RoundsScreen> {
           ),
         ],
       ),
-      body: StreamBuilder(
-          stream: provider.outRoundCreator, builder: _roundBuilder),
+      body: BlocProviderList(
+        listBloc: [Bloc(TournamentBloc()), Bloc(MatchSimulatorBloc())],
+        child: StreamBuilder(
+            stream: tournamentProvider.outRoundCreator, builder: _roundBuilder),
+      ),
     );
   }
 
@@ -85,12 +90,13 @@ class _RoundsScreenState extends State<RoundsScreen> {
                   child: FlatButton.icon(
                       onPressed: () {
 
-
                       },
                       icon: Icon(Icons.play_arrow),
                       label: Text("Simulate", style: defaultTextStyle)))
             ],
           ),
+
+
           RoundWidget(r)
         ],
       ),

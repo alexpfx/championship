@@ -4,7 +4,7 @@ import 'package:championship/service/game_simulator.dart';
 import 'package:test/test.dart';
 
 void main() {
-  GameSimulator gameSimulator;
+  MatchSimulator gameSimulator;
 
   setUp(() {
     MatchInfo match = MatchInfo(
@@ -12,7 +12,7 @@ void main() {
         awayTeam: Team("Internacional", 80),
         homeScore: 0,
         awayScore: 0);
-    gameSimulator = GameSimulator(match);
+    gameSimulator = MatchSimulator(match);
   });
 
   test("simulate", () {

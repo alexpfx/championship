@@ -5,22 +5,32 @@ import 'package:championship/model/match_info.dart';
 import 'package:championship/model/match_result.dart';
 import 'package:championship/model/team.dart';
 
-class GameSimulator {
+enum Status {
+  created,
+  running,
+  finished
+}
+
+
+class MatchSimulator {
+  
+  Status _matchStatus;
+  
   static const delta = 0.01;
   static const randomWeight = 0.9;
   static const powerWeight = 0.5;
 
-  static List<GameStatus> _order = [
-    GameStatus.goal,
-    GameStatus.lastDefense,
-    GameStatus.firstDefense,
-    GameStatus.middle,
-    GameStatus.neutral,
-    GameStatus.changeTeams
+  static List<BallPosition> _order = [
+    BallPosition.goal,
+    BallPosition.lastDefense,
+    BallPosition.firstDefense,
+    BallPosition.middle,
+    BallPosition.neutral,
+    BallPosition.changeTeams
   ];
 
   int totalMinutes;
-  GameStatus _gameStatus = GameStatus.neutral;
+  BallPosition _ballPosition = BallPosition.neutral;
   MatchEvent _matchEvent;
   MatchInfo _match;
 
@@ -32,9 +42,13 @@ class GameSimulator {
 
   Function(MatchEvent) _matchEventCallback;
 
-  GameSimulator(this._match);
+  MatchSimulator(this._match);
 
   startSimulation(Function(MatchEvent) matchEventCallback, int minutes) {
+    if (_matchStatus != null){
+      return;
+    }
+
     totalMinutes = minutes;
     this._matchEventCallback = matchEventCallback;
     _matchEvent = MatchEvent(0, 0, _match, 0);
@@ -43,40 +57,42 @@ class GameSimulator {
     Team awayTeam = _match.awayTeam;
 
     chooseSides(homeTeam, awayTeam);
+
+    _matchStatus = Status.created;
   }
 
   _simulate() {
-    _gameStatus = _updateStatus(_attacker, _defender);
+    _ballPosition = _updateBallPosition(_attacker, _defender);
 
-    if (GameStatus.goal == _gameStatus) {
+    if (BallPosition.goal == _ballPosition) {
       _sendGoal(_attacker);
     }
 
-    if (GameStatus.changeTeams == _gameStatus ||
-        GameStatus.goal == _gameStatus) {
+    if (BallPosition.changeTeams == _ballPosition ||
+        BallPosition.goal == _ballPosition) {
       changeBallControll();
 
-      _gameStatus = GameStatus.neutral;
+      _ballPosition = BallPosition.neutral;
     }
   }
 
-  canStep() {
-    return !_matchEvent.isFinished;
-  }
 
-  bool step() {
-    if (!canStep()) {
-      throw StateError("Game is already finish. ");
+  step() {
+    print(_matchStatus);
+    if (_matchStatus == Status.finished){
+      return;
     }
 
+    _matchStatus = Status.running;
     currentTime++;
     _simulate();
     if (currentTime >= totalMinutes) {
       _matchEvent.finishGame();
+      _matchStatus = Status.finished;
+
       _matchEventCallback(_matchEvent);
-      return false;
     }
-    return true;
+
   }
 
   void changeBallControll() {
@@ -85,22 +101,22 @@ class GameSimulator {
     _attacker = temp;
   }
 
-  GameStatus _updateStatus(Team attacker, Team defender) {
+  BallPosition _updateBallPosition(Team attacker, Team defender) {
     double rAtt = (_random.nextInt(9) + 1).toDouble() / 10;
     double at = rAtt * randomWeight +
-        (attacker.teamPower / 100) * _gameStatus.attackInfluence * powerWeight;
+        (attacker.teamPower / 100) * _ballPosition.attackInfluence * powerWeight;
 
     double rDef = (_random.nextInt(9) + 1).toDouble() / 10;
     double df = rDef * randomWeight +
-        (defender.teamPower / 100) * _gameStatus.defenseInfluence * powerWeight;
+        (defender.teamPower / 100) * _ballPosition.defenseInfluence * powerWeight;
 
     double luckFactorAtt = _random.nextDouble() * 1.3;
     double luckFactorDef = _random.nextDouble() * 1.4;
-    return _compareGameStatus(
-        at + luckFactorAtt, df + luckFactorDef, _gameStatus);
+    return _comparePosition(
+        at + luckFactorAtt, df + luckFactorDef, _ballPosition);
   }
 
-  GameStatus _compareGameStatus(double at, double df, GameStatus _gameStatus) {
+  BallPosition _comparePosition(double at, double df, BallPosition _gameStatus) {
     var diff = (at - df).abs();
 
     if (diff <= delta) {
@@ -110,9 +126,9 @@ class GameSimulator {
     return (at > df) ? _prev(_gameStatus) : _next(_gameStatus);
   }
 
-  GameStatus _prev(GameStatus status) => _order[_order.indexOf(status) - 1];
+  BallPosition _prev(BallPosition status) => _order[_order.indexOf(status) - 1];
 
-  GameStatus _next(GameStatus status) => _order[_order.indexOf(status) + 1];
+  BallPosition _next(BallPosition status) => _order[_order.indexOf(status) + 1];
 
   Map<String, int> goals = {};
 
@@ -133,5 +149,10 @@ class GameSimulator {
       _attacker = awayTeam;
       _defender = homeTeam;
     }
+  }
+
+  bool isFinished() {
+    return _matchStatus == Status.finished;
+
   }
 }
