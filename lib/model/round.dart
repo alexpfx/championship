@@ -4,8 +4,12 @@ class Round{
 
   List<MatchInfo> get matches => _matches;
 
+  String _name;
 
-  Round(this._matches);
+
+  String get name => _name;
+
+  Round(this._matches, this._name);
 
   @override
   String toString() {

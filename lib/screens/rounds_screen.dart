@@ -28,9 +28,7 @@ class _RoundsScreenState extends State<RoundsScreen> {
         actions: <Widget>[
           IconButton(
             tooltip: "standings",
-            onPressed: (){
-
-            },
+            onPressed: () {},
             icon: Icon(
               Icons.apps,
               color: Colors.white,
@@ -62,44 +60,6 @@ class _RoundsScreenState extends State<RoundsScreen> {
 
   Widget _itemBuilder(BuildContext context, int index, List<Round> rounds) {
     Round r = rounds[index];
-    final defaultTextStyle =
-        TextStyle(color: Colors.black54, fontWeight: FontWeight.w700);
-
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Container(
-                decoration:
-                    BoxDecoration(borderRadius: BorderRadius.circular(2)),
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  "Round ${index + 1}",
-                  style: defaultTextStyle,
-                ),
-              ),
-              Container(
-                  decoration:
-                      BoxDecoration(borderRadius: BorderRadius.circular(2)),
-                  child: FlatButton.icon(
-                      onPressed: () {
-
-                      },
-                      icon: Icon(Icons.play_arrow),
-                      label: Text("Simulate", style: defaultTextStyle)))
-            ],
-          ),
-
-
-          RoundWidget(r)
-        ],
-      ),
-    );
+    return RoundWidget(r);
   }
 }

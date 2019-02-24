@@ -1,7 +1,7 @@
 import 'package:championship/model/team.dart';
 
 class MatchInfo {
-  String _info;
+  String _name;
   Team _homeTeam;
   Team _awayTeam;
   int _homeScore;
@@ -9,11 +9,13 @@ class MatchInfo {
 
 
   MatchInfo({String info, homeTeam, awayTeam, homeScore, awayScore})
-      : _info = info,
+      : _name = info,
         _homeTeam = homeTeam,
         _awayTeam = awayTeam,
         _homeScore = homeScore,
-        _awayScore = awayScore;
+        _awayScore = awayScore
+
+  ;
 
   Team get awayTeam => _awayTeam;
 
@@ -29,12 +31,7 @@ class MatchInfo {
     _awayScore = awayTeamScore;
   }
 
-  String get info => _info;
-
-
-  set info(String value) {
-    _info = value;
-  }
+  String get name => _name;
 
   @override
   String toString() {

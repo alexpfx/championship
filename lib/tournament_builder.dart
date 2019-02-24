@@ -29,18 +29,30 @@ List<Round> _buildLeagueTournament(TournamentSetup setup) {
 
   List<Round> rounds = [];
 
+  int validMatchIndex = 1;
   for (int i = 1; i < size; i++) {
     var roundMatches = <MatchInfo>[];
     for (int j = 0; j < mid; j++) {
       var home = teams[j];
       var away = teams[(size - 1) - j];
-      var match =
-          MatchInfo(homeTeam: home, awayTeam: away, homeScore: 0, awayScore: 0);
+      var match;
+
+      if (home == _dummyTeam || away == _dummyTeam) {
+        match = MatchInfo();
+      } else {
+        match = MatchInfo(
+            info: 'Match ${validMatchIndex++}',
+            homeTeam: home,
+            awayTeam: away,
+            homeScore: 0,
+            awayScore: 0);
+      }
+
       print('${home.teamName} x ${away.teamName}');
       roundMatches.add(match);
     }
     print('\n');
-    var r = Round(roundMatches);
+    var r = Round(roundMatches, "Round $i");
     rounds.add(r);
     teams = _rotate(teams, 0);
   }
@@ -51,14 +63,10 @@ List<Round> _buildLeagueTournament(TournamentSetup setup) {
 List<Round> _cleanUp(List<Round> rounds) {
   rounds.forEach((r) {
     var matches = r.matches;
-    int index = 0;
     for (int i = 0; i < matches.length; i++) {
       MatchInfo m = matches[i];
-      if (m.homeTeam == _dummyTeam || m.awayTeam == _dummyTeam) {
+      if (m.homeTeam == null || m.awayTeam == null) {
         matches.removeAt(i);
-      } else {
-        index++;
-        m.info = "Match $index";
       }
     }
   });

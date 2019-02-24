@@ -16,7 +16,8 @@ void main() {
   });
 
   test("simulate", () {
-    gameSimulator.startSimulation((e) => print(e), 90);
+    print("\n");
+    gameSimulator.startSimulation((e) => print(e));
 
     for (int i = 0; i < 90; i++) {
       gameSimulator.step();
@@ -24,15 +25,16 @@ void main() {
 
   });
 
-  test("callwhengamefinish", () {
-    gameSimulator.startSimulation((e) => print(e), 90);
+  test("simulate120min", () {
+    print("\n");
+    gameSimulator.startSimulation((e) => print(e));
 
-    while(gameSimulator.step()) {
-      // run until end
+    for (int i = 0; i < 120; i++) {
+      gameSimulator.step();
     }
 
-    expect(() => gameSimulator.step(), throwsA(TypeMatcher<StateError>()));
-
-
   });
+
+
+
 }

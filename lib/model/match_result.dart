@@ -7,10 +7,6 @@ class MatchEvent {
 
   MatchInfo _match;
 
-  bool _finished = false;
-
-  bool get isFinished => _finished;
-
   int get homeTeamScore => _homeTeamScore;
 
   int get awayTeamScore => _awayTeamScore;
@@ -34,12 +30,8 @@ class MatchEvent {
 
   @override
   String toString() {
-    return 'MatchResult{_homeTeamScore: $_homeTeamScore, _awayTeamScore: $_awayTeamScore, _finished: $_finished}';
+    return 'MatchEvent{_homeTeamScore: $_homeTeamScore, _awayTeamScore: $_awayTeamScore, _minute: $_minute, _match: $_match}';
   }
 
-  void finishGame() {
-    _finished = true;
 
-    _match.updateScores(homeTeamScore, awayTeamScore);
-  }
 }

@@ -1,31 +1,20 @@
-import 'package:bloc_pattern/bloc_pattern.dart';
-import 'package:championship/bloc/match_simulator_bloc.dart';
 import 'package:championship/model/match_info.dart';
 import 'package:championship/model/match_result.dart';
 import 'package:championship/smodel/match_model.dart';
 import 'package:flutter/material.dart';
-import 'package:scoped_model/scoped_model.dart';
 
 class MatchWidget extends StatelessWidget {
-  final MatchInfo _matchInfo;
-
-  MatchWidget(this._matchInfo);
 
   @override
   Widget build(BuildContext context) {
-    return ScopedModel<MatchModel>(
-      model: new MatchModel(_matchInfo),
-      child: Card(
-        child: ScopedModelDescendant<MatchModel>(
-          builder: _buildModel,
-        ),
-      ),
-    );
+    return Card(child: _buildModel(context),);
   }
 
-  Widget _buildModel(BuildContext context, Widget child, MatchModel model) {
+  Widget _buildModel(context) {
     const horizontalPadding = 16.0;
     const verticalPadding = 16.0;
+
+    MatchModel model = MatchModel.of(context);
 
     MatchInfo matchInfo = model.matchInfo;
     MatchEvent lastEvent = model.lastEvent;
@@ -40,25 +29,13 @@ class MatchWidget extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                IconButton(
-                  padding: EdgeInsets.only(right: 16),
-                  onPressed: () {
-                    model.startSimulation(90);
-
-//                    BlocProviderList.of<MatchSimulatorBloc>(context)
-//                        .inMatchInfo
-//                        .add(matchInfo);
-
-                  },
-                  icon: Icon(
-                    Icons.play_arrow,
-                    color: Colors.white,
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    matchInfo.name,
+                    style: TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.bold),
                   ),
-                ),
-                Text(
-                  matchInfo.info,
-                  style: TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.bold),
                 ),
               ],
             ),

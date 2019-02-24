@@ -1,98 +1,67 @@
 import 'dart:math' as math;
 
-import 'package:championship/model/game_status.dart';
+import 'package:championship/model/field_sector_position.dart';
 import 'package:championship/model/match_info.dart';
 import 'package:championship/model/match_result.dart';
 import 'package:championship/model/team.dart';
 
-enum Status {
-  created,
-  running,
-  finished
-}
-
-
 class MatchSimulator {
-  
-  Status _matchStatus;
-  
-  static const delta = 0.01;
-  static const randomWeight = 0.9;
-  static const powerWeight = 0.5;
+  static const _delta = 0.01;
+  static const _randomWeight = 0.9;
+  static const _powerWeight = 0.5;
 
-  static List<BallPosition> _order = [
-    BallPosition.goal,
-    BallPosition.lastDefense,
-    BallPosition.firstDefense,
-    BallPosition.middle,
-    BallPosition.neutral,
-    BallPosition.changeTeams
+  static List<SectorStatus> _order = [
+    SectorStatus.goal,
+    SectorStatus.lastDefense,
+    SectorStatus.firstDefense,
+    SectorStatus.middle,
+    SectorStatus.neutral,
+    SectorStatus.changeTeams
   ];
 
-  int totalMinutes;
-  BallPosition _ballPosition = BallPosition.neutral;
-  MatchEvent _matchEvent;
+  SectorStatus _ballPosition = SectorStatus.neutral;
   MatchInfo _match;
 
   math.Random _random = math.Random(DateTime.now().millisecondsSinceEpoch);
 
   Team _attacker;
   Team _defender;
-  int currentTime = 0;
+  int _currentTime = 0;
+  int _homeTeamScore = 0;
+  int _awayTeamScore = 0;
 
   Function(MatchEvent) _matchEventCallback;
 
   MatchSimulator(this._match);
 
-  startSimulation(Function(MatchEvent) matchEventCallback, int minutes) {
-    if (_matchStatus != null){
-      return;
-    }
-
-    totalMinutes = minutes;
+  startSimulation(Function(MatchEvent) matchEventCallback) {
     this._matchEventCallback = matchEventCallback;
-    _matchEvent = MatchEvent(0, 0, _match, 0);
 
     Team homeTeam = _match.homeTeam;
     Team awayTeam = _match.awayTeam;
 
     chooseSides(homeTeam, awayTeam);
-
-    _matchStatus = Status.created;
   }
 
   _simulate() {
     _ballPosition = _updateBallPosition(_attacker, _defender);
 
-    if (BallPosition.goal == _ballPosition) {
+    if (SectorStatus.goal == _ballPosition) {
       _sendGoal(_attacker);
     }
 
-    if (BallPosition.changeTeams == _ballPosition ||
-        BallPosition.goal == _ballPosition) {
+    if (SectorStatus.changeTeams == _ballPosition ||
+        SectorStatus.goal == _ballPosition) {
       changeBallControll();
 
-      _ballPosition = BallPosition.neutral;
+      _ballPosition = SectorStatus.neutral;
     }
   }
 
-
-  step() {
-    print(_matchStatus);
-    if (_matchStatus == Status.finished){
-      return;
-    }
-
-    _matchStatus = Status.running;
-    currentTime++;
+  int step() {
     _simulate();
-    if (currentTime >= totalMinutes) {
-      _matchEvent.finishGame();
-      _matchStatus = Status.finished;
 
-      _matchEventCallback(_matchEvent);
-    }
-
+    return _currentTime++;
   }
 
   void changeBallControll() {
@@ -101,14 +70,18 @@ class MatchSimulator {
     _attacker = temp;
   }
 
-  BallPosition _updateBallPosition(Team attacker, Team defender) {
+  SectorStatus _updateBallPosition(Team attacker, Team defender) {
     double rAtt = (_random.nextInt(9) + 1).toDouble() / 10;
-    double at = rAtt * randomWeight +
-        (attacker.teamPower / 100) * _ballPosition.attackInfluence * powerWeight;
+    double at = rAtt * _randomWeight +
+        (attacker.teamPower / 100) *
+            _ballPosition.attackInfluence *
+            _powerWeight;
 
     double rDef = (_random.nextInt(9) + 1).toDouble() / 10;
-    double df = rDef * randomWeight +
-        (defender.teamPower / 100) * _ballPosition.defenseInfluence * powerWeight;
+    double df = rDef * _randomWeight +
+        (defender.teamPower / 100) *
+            _ballPosition.defenseInfluence *
+            _powerWeight;
 
     double luckFactorAtt = _random.nextDouble() * 1.3;
     double luckFactorDef = _random.nextDouble() * 1.4;
@@ -116,29 +89,31 @@ class MatchSimulator {
         at + luckFactorAtt, df + luckFactorDef, _ballPosition);
   }
 
-  BallPosition _comparePosition(double at, double df, BallPosition _gameStatus) {
+  SectorStatus _comparePosition(
+      double at, double df, SectorStatus _gameStatus) {
     var diff = (at - df).abs();
 
-    if (diff <= delta) {
+    if (diff <= _delta) {
       return _gameStatus;
     }
 
     return (at > df) ? _prev(_gameStatus) : _next(_gameStatus);
   }
 
-  BallPosition _prev(BallPosition status) => _order[_order.indexOf(status) - 1];
+  SectorStatus _prev(SectorStatus status) => _order[_order.indexOf(status) - 1];
 
-  BallPosition _next(BallPosition status) => _order[_order.indexOf(status) + 1];
+  SectorStatus _next(SectorStatus status) => _order[_order.indexOf(status) + 1];
 
   Map<String, int> goals = {};
 
   void _sendGoal(Team attacker) {
     if (attacker == _match.homeTeam) {
-      _matchEvent.addHomeScore();
+      _homeTeamScore++;
     } else {
-      _matchEvent.addAwayScore();
+      _awayTeamScore++;
     }
-    _matchEventCallback(_matchEvent);
+    _matchEventCallback(
+        MatchEvent(_homeTeamScore, _awayTeamScore, _match, _currentTime));
   }
 
   void chooseSides(Team homeTeam, Team awayTeam) {
@@ -149,10 +124,5 @@ class MatchSimulator {
       _attacker = awayTeam;
       _defender = homeTeam;
     }
-  }
-
-  bool isFinished() {
-    return _matchStatus == Status.finished;
-
   }
 }
