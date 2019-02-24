@@ -1,5 +1,6 @@
 import 'package:championship/model/match_info.dart';
 import 'package:championship/model/match_result.dart';
+import 'package:championship/model/match_status.dart';
 import 'package:championship/service/game_simulator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:scoped_model/scoped_model.dart';
@@ -7,9 +8,10 @@ import 'package:scoped_model/scoped_model.dart';
 class MatchModel extends Model {
   int _totalTime;
 
-  var _finished = false;
+  MatchStatus _matchStatus = MatchStatus.notStarted;
 
   var _currentTime = 0;
+
   MatchModel(this._matchInfo) {
     _gameSimulator = MatchSimulator(_matchInfo);
   }
@@ -29,6 +31,8 @@ class MatchModel extends Model {
 
   int get time => _currentTime;
 
+  MatchStatus get status => _matchStatus;
+
 
   void initialize(int minutes) {
     _totalTime = minutes;
@@ -39,17 +43,19 @@ class MatchModel extends Model {
 
   void stepGame() {
     _currentTime = _gameSimulator.step();
+    if (MatchStatus.notStarted == _matchStatus){
+      _matchStatus = MatchStatus.running;
+    }
 
-    if (_currentTime >= _totalTime){
-      _finished = true;
+    if (_currentTime >= _totalTime) {
+      _matchStatus = MatchStatus.ended;
     }
     notifyListeners();
-
   }
 
-  get finished => _finished;
+  get finished => MatchStatus.ended == _matchStatus;
 
-  static MatchModel of(BuildContext context){
+  static MatchModel of(BuildContext context) {
     return ScopedModel.of<MatchModel>(context);
   }
 }

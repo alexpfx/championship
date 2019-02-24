@@ -1,4 +1,5 @@
 import 'package:championship/model/match_result.dart';
+import 'package:championship/model/match_status.dart';
 import 'package:championship/smodel/match_model.dart';
 import 'package:flutter/material.dart';
 
@@ -36,14 +37,35 @@ class MatchWidget extends StatelessWidget {
                         color: Colors.white, fontWeight: FontWeight.bold),
                   ),
                 ),
-                Text("${model.time} \'", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),)
-
+                Text(
+                  "${model.time} \'",
+                  style: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.bold),
+                )
               ],
             ),
           ),
         ),
-
-
+        Container(
+          decoration: BoxDecoration(
+            color: colorFromMatchStatus(model.status),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Expanded(
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  child: Text(
+                    model.status.name,
+                    style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
         Expanded(
           child: Padding(
             padding: const EdgeInsets.symmetric(
@@ -89,5 +111,16 @@ class MatchWidget extends StatelessWidget {
         )
       ],
     );
+  }
+
+  colorFromMatchStatus(MatchStatus matchStatus) {
+    switch (matchStatus) {
+      case MatchStatus.notStarted:
+        return Colors.red;
+      case MatchStatus.running:
+        return Colors.green;
+      case MatchStatus.ended:
+        return Colors.blue;
+    }
   }
 }
