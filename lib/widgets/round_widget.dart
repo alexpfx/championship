@@ -42,7 +42,7 @@ class RoundWidget extends StatelessWidget {
                       BoxDecoration(borderRadius: BorderRadius.circular(2)),
                   child: FlatButton.icon(
                       onPressed: () {
-                        _roundModel.stepNotFinished();
+                        _roundModel.runTheGame();
                       },
                       icon: Icon(Icons.play_arrow),
                       label: Text("Simulate", style: defaultTextStyle)))

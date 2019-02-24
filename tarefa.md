@@ -1,1 +1,1 @@
-- adicionar status
+- executar todos os steps até o final do jogo de maneira assincrona. 

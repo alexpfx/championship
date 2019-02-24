@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:championship/model/round.dart';
 import 'package:championship/smodel/match_model.dart';
 import 'package:flutter/cupertino.dart';
@@ -5,11 +7,12 @@ import 'package:scoped_model/scoped_model.dart';
 
 class RoundModel extends Model {
 
-  static RoundModel of (BuildContext context) => ScopedModel.of<RoundModel>(context);
+  static RoundModel of(BuildContext context) =>
+      ScopedModel.of<RoundModel>(context);
 
   final Round _round;
 
-  RoundModel(this._round){
+  RoundModel(this._round) {
     initialize();
   }
 
@@ -19,7 +22,7 @@ class RoundModel extends Model {
 
   Round get round => _round;
 
-  List<MatchModel> matchs= [];
+  List<MatchModel> matchs = [];
 
   int get length => matchs.length;
 
@@ -27,11 +30,10 @@ class RoundModel extends Model {
 
   int get numberOfMatches => matchs.length;
 
-  MatchModel matchAt (int index) => matchs[index];
+  MatchModel matchAt(int index) => matchs[index];
 
 
-
-  initialize(){
+  initialize() {
     _started = true;
     var mInfos = round.matches;
     for (var match in mInfos) {
@@ -41,12 +43,29 @@ class RoundModel extends Model {
     }
   }
 
-  stepNotFinished (){
+  int x = 90;
+
+  runTheGame() {
+    int count = 0;
+
+    Timer.periodic(Duration(seconds: 1), (timer){
+      stepNotFinished();
+      count ++;
+      if (count >= x){
+        timer.cancel();
+      }
+
+    });
+  }
+
+  stepNotFinished() {
     var notFinishedMatchs = matchs.where((m) => !m.finished);
-    notFinishedMatchs.forEach((m){
+    notFinishedMatchs.forEach((m) {
       m.stepGame();
     });
   }
+
+
 
 
 
