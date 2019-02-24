@@ -1,1 +1,2 @@
-tornar matchEvent imutavel
+- tornar simulador e matchs assincronos.
+- adicionar informações de eventos na tela de match.  

@@ -1,13 +1,13 @@
-import 'package:championship/model/match_info.dart';
 import 'package:championship/model/match_result.dart';
 import 'package:championship/smodel/match_model.dart';
 import 'package:flutter/material.dart';
 
 class MatchWidget extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
-    return Card(child: _buildModel(context),);
+    return Card(
+      child: _buildModel(context),
+    );
   }
 
   Widget _buildModel(context) {
@@ -16,31 +16,34 @@ class MatchWidget extends StatelessWidget {
 
     MatchModel model = MatchModel.of(context);
 
-    MatchInfo matchInfo = model.matchInfo;
     MatchEvent lastEvent = model.lastEvent;
 
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         Container(
-          decoration: BoxDecoration(color: Colors.black54),
+          decoration: BoxDecoration(color: Theme.of(context).primaryColor),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
+                Expanded(
                   child: Text(
-                    matchInfo.name,
+                    model.matchName,
                     style: TextStyle(
                         color: Colors.white, fontWeight: FontWeight.bold),
                   ),
                 ),
+                Text("${model.time} \'", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),)
+
               ],
             ),
           ),
         ),
+
+
         Expanded(
           child: Padding(
             padding: const EdgeInsets.symmetric(
@@ -50,7 +53,7 @@ class MatchWidget extends StatelessWidget {
               children: <Widget>[
                 Expanded(
                   child: Text(
-                    matchInfo.homeTeam.teamName,
+                    model.homeTeamName,
                     textAlign: TextAlign.start,
                   ),
                 ),
@@ -71,7 +74,7 @@ class MatchWidget extends StatelessWidget {
             children: <Widget>[
               Expanded(
                 child: Text(
-                  matchInfo.awayTeam.teamName,
+                  model.awayTeamName,
                   textAlign: TextAlign.start,
                 ),
               ),

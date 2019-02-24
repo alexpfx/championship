@@ -61,7 +61,7 @@ class MatchSimulator {
   int step() {
     _simulate();
 
-    return _currentTime++;
+    return ++_currentTime;
   }
 
   void changeBallControll() {

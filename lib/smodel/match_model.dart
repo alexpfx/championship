@@ -5,9 +5,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class MatchModel extends Model {
-  int _minutes;
+  int _totalTime;
 
   var _finished = false;
+
+  var _currentTime = 0;
   MatchModel(this._matchInfo) {
     _gameSimulator = MatchSimulator(_matchInfo);
   }
@@ -19,19 +21,26 @@ class MatchModel extends Model {
 
   MatchEvent get lastEvent => _lastEvent;
 
-  MatchInfo get matchInfo => _matchInfo;
+  String get matchName => _matchInfo.name;
+
+  String get homeTeamName => _matchInfo.homeTeam.teamName;
+
+  String get awayTeamName => _matchInfo.awayTeam.teamName;
+
+  int get time => _currentTime;
+
 
   void initialize(int minutes) {
-    _minutes = minutes;
+    _totalTime = minutes;
     _gameSimulator.startSimulation((matchEvent) {
       _lastEvent = matchEvent;
     });
   }
 
   void stepGame() {
-    var currentTime = _gameSimulator.step();
+    _currentTime = _gameSimulator.step();
 
-    if (currentTime >= _minutes){
+    if (_currentTime >= _totalTime){
       _finished = true;
     }
     notifyListeners();
