@@ -228,8 +228,10 @@ class _TeamsScreenState extends State<TeamsScreen> {
     return [
       Team(
         "Grêmio",
-        99,
+        91,
       ),
+      Team('União São João de Araras', 45),
+      Team('União Barbarense FC', 32),
       Team(
         "Internacional",
         79,

@@ -12,7 +12,7 @@ class MatchWidget extends StatelessWidget {
   }
 
   Widget _buildModel(context) {
-    const horizontalPadding = 16.0;
+    const horizontalPadding = 8.0;
     const verticalPadding = 16.0;
 
     MatchModel model = MatchModel.of(context);
@@ -75,12 +75,14 @@ class MatchWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Expanded(
+                  flex: 4,
                   child: Text(
                     model.homeTeamName,
                     textAlign: TextAlign.start,
                   ),
                 ),
                 Expanded(
+                  flex: 1,
                   child: Text(
                     lastEvent?.homeTeamScore?.toString() ?? "0",
                     textAlign: TextAlign.end,
@@ -96,12 +98,14 @@ class MatchWidget extends StatelessWidget {
           child: Row(
             children: <Widget>[
               Expanded(
+                flex: 4,
                 child: Text(
                   model.awayTeamName,
                   textAlign: TextAlign.start,
                 ),
               ),
               Expanded(
+                flex: 1,
                 child: Text(
                   lastEvent?.awayTeamScore?.toString() ?? "0",
                   textAlign: TextAlign.end,
