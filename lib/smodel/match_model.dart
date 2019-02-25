@@ -7,6 +7,8 @@ import 'package:championship/service/game_simulator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:scoped_model/scoped_model.dart';
 
+
+
 class MatchModel extends Model {
   int _totalTime;
 
@@ -35,6 +37,8 @@ class MatchModel extends Model {
 
   MatchStatus get status => _matchStatus;
 
+
+
   void initialize(int minutes) {
     _totalTime = minutes;
     _gameSimulator.startSimulation((matchEvent) {
@@ -42,10 +46,10 @@ class MatchModel extends Model {
     });
   }
 
-  runGame() {
+  runGame() async{
     int count = 0;
 
-    Timer.periodic(Duration(milliseconds: 750), (timer) {
+    Timer.periodic(Duration(milliseconds: 200), (timer) {
       stepGame();
       count++;
       if (count >= _totalTime) {

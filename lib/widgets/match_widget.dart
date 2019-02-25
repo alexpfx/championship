@@ -48,7 +48,7 @@ class MatchWidget extends StatelessWidget {
         ),
         Container(
           decoration: BoxDecoration(
-            color: colorFromMatchStatus(model.status),
+            color: _colorFromMatchStatus(model.status),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -59,7 +59,8 @@ class MatchWidget extends StatelessWidget {
                       const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   child: Text(
                     model.status.name,
-                    style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.bold),
                   ),
                 ),
               ),
@@ -113,7 +114,7 @@ class MatchWidget extends StatelessWidget {
     );
   }
 
-  colorFromMatchStatus(MatchStatus matchStatus) {
+  _colorFromMatchStatus(MatchStatus matchStatus) {
     switch (matchStatus) {
       case MatchStatus.notStarted:
         return Colors.red;
