@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:championship/model/match_info.dart';
 import 'package:championship/model/match_result.dart';
 import 'package:championship/model/match_status.dart';
@@ -33,7 +35,6 @@ class MatchModel extends Model {
 
   MatchStatus get status => _matchStatus;
 
-
   void initialize(int minutes) {
     _totalTime = minutes;
     _gameSimulator.startSimulation((matchEvent) {
@@ -41,9 +42,21 @@ class MatchModel extends Model {
     });
   }
 
+  runGame() {
+    int count = 0;
+
+    Timer.periodic(Duration(milliseconds: 750), (timer) {
+      stepGame();
+      count++;
+      if (count >= _totalTime) {
+        timer.cancel();
+      }
+    });
+  }
+
   void stepGame() {
     _currentTime = _gameSimulator.step();
-    if (MatchStatus.notStarted == _matchStatus){
+    if (MatchStatus.notStarted == _matchStatus) {
       _matchStatus = MatchStatus.running;
     }
 

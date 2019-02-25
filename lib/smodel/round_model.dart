@@ -46,26 +46,11 @@ class RoundModel extends Model {
   int x = 90;
 
   runTheGame() {
-    int count = 0;
-
-    Timer.periodic(Duration(seconds: 1), (timer){
-      stepNotFinished();
-      count ++;
-      if (count >= x){
-        timer.cancel();
-      }
-
-    });
-  }
-
-  stepNotFinished() {
     var notFinishedMatchs = matchs.where((m) => !m.finished);
     notFinishedMatchs.forEach((m) {
-      m.stepGame();
+      m.runGame();
     });
   }
-
-
 
 
 
