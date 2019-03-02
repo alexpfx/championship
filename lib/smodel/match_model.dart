@@ -7,8 +7,6 @@ import 'package:championship/service/game_simulator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-
-
 class MatchModel extends Model {
   int _totalTime;
 
@@ -37,8 +35,6 @@ class MatchModel extends Model {
 
   MatchStatus get status => _matchStatus;
 
-
-
   void initialize(int minutes) {
     _totalTime = minutes;
     _gameSimulator.startSimulation((matchEvent) {
@@ -65,7 +61,9 @@ class MatchModel extends Model {
     }
 
     if (_currentTime >= _totalTime) {
+      _matchInfo.finished = true;
       _matchStatus = MatchStatus.ended;
+      _matchInfo.updateScores(_lastEvent.homeTeamScore, _lastEvent.awayTeamScore);
     }
     notifyListeners();
   }

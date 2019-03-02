@@ -228,57 +228,55 @@ class _TeamsScreenState extends State<TeamsScreen> {
     return [
       Team(
         "Grêmio",
-        91,
+        76,
       ),
-      Team('União São João de Araras', 45),
-      Team('União Barbarense FC', 32),
       Team(
         "Internacional",
         79,
       ),
       Team(
         "Flamengo",
-        90,
+        82,
       ),
       Team(
         "Fluminense",
-        45,
+        55,
       ),
       Team(
         "Vasco",
-        45,
+        53,
       ),
       Team(
         "Botafogo",
-        45,
+        61,
       ),
       Team(
         "Palmeiras",
-        95,
+        90,
       ),
       Team(
         "São Paulo",
-        79,
+        73,
       ),
       Team(
         "Santos",
-        45,
+        60,
       ),
       Team(
         "Corinthians",
-        45,
+        54,
       ),
       Team(
         "Ceará",
-        45,
+        54,
       ),
       Team(
         "Bahia",
-        45,
+        58,
       ),
       Team(
         "Vitória",
-        45,
+        47,
       ),
       Team(
         "Chapecoense",
@@ -286,27 +284,27 @@ class _TeamsScreenState extends State<TeamsScreen> {
       ),
       Team(
         "Cruzeiro",
-        45,
+        63,
       ),
       Team(
         "Atlético Mineiro",
-        45,
+        69,
       ),
       Team(
         "América Mineiro",
-        45,
+        50,
       ),
       Team(
         "Atlético Paranaense",
-        45,
+        67,
       ),
       Team(
         "Paraná",
-        45,
+        33,
       ),
       Team(
         "Sport",
-        45,
+        52,
       ),
     ];
   }

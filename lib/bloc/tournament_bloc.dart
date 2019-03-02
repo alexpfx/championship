@@ -8,7 +8,8 @@ import 'package:championship/tournament_builder.dart';
 class TournamentBloc implements BlocBase {
   var _controller = StreamController<List<Round>>();
 
-  Stream<List<Round>> get outRoundCreator => _controller.stream.asBroadcastStream();
+  Stream<List<Round>> get outRoundCreator =>
+      _controller.stream.asBroadcastStream();
 
   StreamController<TournamentSetup> _inputController =
       StreamController<TournamentSetup>();
@@ -27,12 +28,8 @@ class TournamentBloc implements BlocBase {
 
   void _tournamentSetup(TournamentSetup setup) {
     if (TournamentType.league == setup.type) {
-      List<Round> rounds = buildTournament (setup);
+      List<Round> rounds = buildTournament(setup);
       _controller.sink.add(rounds);
     }
-
   }
-
-
-
 }

@@ -1,4 +1,17 @@
-- times com nome grande estão quebrando
+- não deixar o primeiro time ser sempre o primeiro jogo do round
+
+- melhorar design da tabela de classificacao
+
+- melhorar design da lista de jogos
+
+- nao deixar startar se jogo ja finalizado. 
+
+- substituir bloc por scoped model (criação de rounds). 
+
+- implementar bottom sheet com a classificacao do campeonato. 
+
+
+ok - times com nome grande estão quebrando
 
 ok - status dos rounds: not started, started, ended. 
 ok - alterar Simulate para Start

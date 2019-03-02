@@ -48,11 +48,11 @@ List<Round> _buildLeagueTournament(TournamentSetup setup) {
             awayScore: 0);
       }
 
-      print('${home.teamName} x ${away.teamName}');
+//      print('${home.teamName} x ${away.teamName}');
       roundMatches.add(match);
     }
     print('\n');
-    var r = Round(roundMatches, "Round $i");
+    var r = Round(roundMatches, "Round $i", setup);
     rounds.add(r);
     teams = _rotate(teams, 0);
   }
