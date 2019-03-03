@@ -61,6 +61,8 @@ class MatchSimulator {
   int step() {
     _simulate();
 
+    _matchEventCallback(
+        MatchEvent(_homeTeamScore, _awayTeamScore, _match, _currentTime));
     return ++_currentTime;
   }
 
@@ -104,7 +106,6 @@ class MatchSimulator {
 
   SectorStatus _next(SectorStatus status) => _order[_order.indexOf(status) + 1];
 
-  Map<String, int> goals = {};
 
   void _sendGoal(Team attacker) {
     if (attacker == _match.homeTeam) {
@@ -112,8 +113,7 @@ class MatchSimulator {
     } else {
       _awayTeamScore++;
     }
-    _matchEventCallback(
-        MatchEvent(_homeTeamScore, _awayTeamScore, _match, _currentTime));
+
   }
 
   void chooseSides(Team homeTeam, Team awayTeam) {

@@ -7,11 +7,13 @@ import 'package:scoped_model/scoped_model.dart';
 
 class StandingsWidget extends StatelessWidget {
   final List<Round> _rounds;
+  BuildContext context;
 
   StandingsWidget(this._rounds);
 
   @override
   Widget build(BuildContext context) {
+    this.context = context;
     return ScopedModel(
       model: StandingsModel(_rounds),
       child: ScopedModelDescendant<StandingsModel>(builder: _buildModel),
@@ -19,7 +21,9 @@ class StandingsWidget extends StatelessWidget {
   }
 
   TextStyle headerStyle =
-      new TextStyle(fontWeight: FontWeight.bold, fontSize: 14);
+      TextStyle(fontWeight: FontWeight.bold, color: Colors.white);
+
+  TextStyle boldStyle = TextStyle(fontWeight: FontWeight.bold);
 
   Widget _buildModel(BuildContext context, Widget child, StandingsModel model) {
     return SingleChildScrollView(
@@ -27,19 +31,15 @@ class StandingsWidget extends StatelessWidget {
       child: SingleChildScrollView(
           scrollDirection: Axis.horizontal, child: _buildTable(model, context)),
     );
-//    return ListView(
-//      children: List.generate(10, (index) => index).map((f){
-//        return StandingsRowTile(StandingsRow("Grêmio"));
-//      }).toList(),
-//    );
   }
 
   _buildTable(StandingsModel model, BuildContext context) {
     return Table(
-      defaultColumnWidth: FixedColumnWidth(45),
-      columnWidths: {1: FixedColumnWidth(200)},
+      defaultColumnWidth: FixedColumnWidth(40),
+      columnWidths: {1: FixedColumnWidth(120)},
+      defaultVerticalAlignment: TableCellVerticalAlignment.middle,
       border: TableBorder.symmetric(
-        inside: BorderSide(color: Theme.of(context).accentColor, width: 1),
+        inside: BorderSide(color: Colors.black12, width: 1),
       ),
       children: _buildTableRows(model),
     );
@@ -47,18 +47,22 @@ class StandingsWidget extends StatelessWidget {
 
   List<TableRow> _buildTableRows(StandingsModel model) {
     return [
-      TableRow(decoration: BoxDecoration(), children: [
-        _rowHeader(""),
-        _rowHeader("Team", false),
-        _rowHeader("MP"),
-        _rowHeader("W"),
-        _rowHeader("D"),
-        _rowHeader("L"),
-        _rowHeader("GF"),
-        _rowHeader("GA"),
-        _rowHeader("GD"),
-        _rowHeader("Pts"),
-      ]),
+      TableRow(
+          decoration: BoxDecoration(
+              gradient:
+                  LinearGradient(colors: [Colors.blue, Colors.blueAccent])),
+          children: [
+            _cellt("", textStyle: headerStyle),
+            _cellt("Team", textStyle: headerStyle),
+            _cellt("Pts", textStyle: headerStyle),
+            _cellt("MP", textStyle: headerStyle),
+            _cellt("W", textStyle: headerStyle),
+            _cellt("D", textStyle: headerStyle),
+            _cellt("L", textStyle: headerStyle),
+            _cellt("GF", textStyle: headerStyle),
+            _cellt("GA", textStyle: headerStyle),
+            _cellt("GD", textStyle: headerStyle),
+          ]),
     ]..addAll(_buildDataRows(model));
   }
 
@@ -67,41 +71,29 @@ class StandingsWidget extends StatelessWidget {
 
     return model.rows
         .map((s) => TableRow(children: [
-              _celln(s.position),
-              _cellt(s.team, false),
-              _celln(s.matchPlayed),
-              _celln(s.wins),
-              _celln(s.draws),
-              _celln(s.loses),
-              _celln(s.goalsFor),
-              _celln(s.goalsAgainst),
-              _celln(s.goalsDifference),
-              _celln(s.points),
+              _cellt(s.position),
+              _cellt(s.team, textStyle: boldStyle),
+              _cellt(s.points, textStyle: boldStyle),
+              _cellt(s.matchPlayed),
+              _cellt(s.wins),
+              _cellt(s.draws),
+              _cellt(s.loses),
+              _cellt(s.goalsFor),
+              _cellt(s.goalsAgainst),
+              _cellt(s.goalsDifference),
             ]))
         .toList();
   }
 
-  _rowHeader(String text, [centered = true]) {
-    return centered
-        ? Center(child: Text(text))
-        : Padding(
-            padding: EdgeInsets.all(8),
-            child: Text(text),
-          );
-  }
+  _cellt(dynamic value,
+      {TextStyle textStyle = const TextStyle(fontWeight: FontWeight.normal)}) {
 
-  _celln(int number, [bool centered = true]) {
-    return this._cellt(number.toString(), centered);
-  }
-
-  _cellt(String text, [bool centered = true]) {
-    return TableCell(
-      child: centered
-          ? Center(child: Text(text))
-          : Padding(
-              padding: EdgeInsets.all(8),
-              child: Text(text),
-            ),
+    return Padding(
+      padding: EdgeInsets.all(8),
+      child: Text(
+        value is String? value: value.toString(),
+        style: textStyle,
+      ),
     );
   }
 
