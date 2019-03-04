@@ -53,6 +53,8 @@ List<Round> _buildLeagueTournament(TournamentSetup setup) {
     }
     print('\n');
     var r = Round(roundMatches, "Round $i", setup);
+    r.shuffleMatchs();
+    r.shuffleHomeTeam();
     rounds.add(r);
     teams = _rotate(teams, 0);
   }
@@ -70,6 +72,7 @@ List<Round> _cleanUp(List<Round> rounds) {
       }
     }
   });
+
 
   return List.of(rounds);
 }

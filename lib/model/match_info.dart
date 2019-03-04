@@ -8,18 +8,12 @@ class MatchInfo {
   int _awayScore;
   bool _finished = false;
 
-
-
-
-
-
   MatchInfo({String info, homeTeam, awayTeam, homeScore, awayScore})
       : _name = info,
         _homeTeam = homeTeam,
         _awayTeam = awayTeam,
         _homeScore = homeScore,
-        _awayScore = awayScore
-  ;
+        _awayScore = awayScore;
 
   Team get awayTeam => _awayTeam;
 
@@ -28,7 +22,6 @@ class MatchInfo {
   int get awayScore => _awayScore;
 
   int get homeScore => _homeScore;
-
 
   updateScores(homeTeamScore, awayTeamScore) {
     _homeScore = homeTeamScore;
@@ -42,15 +35,14 @@ class MatchInfo {
     return 'Match{_homeTeam: $_homeTeam, _awayTeam: $_awayTeam}';
   }
 
-
-  MatchResult getHomeResult(){
-    int points = _homeScore == awayScore? 1: _homeScore > _awayScore? 3: 0;
-    return MatchResult(_homeScore, _awayScore, points , _homeTeam);
+  MatchResult getHomeResult() {
+    int points = _homeScore == awayScore ? 1 : _homeScore > _awayScore ? 3 : 0;
+    return MatchResult(_homeScore, _awayScore, points, _homeTeam);
   }
 
-  MatchResult getAwayResult(){
-    int points = _homeScore == awayScore? 1: _homeScore < _awayScore? 3: 0;
-    return MatchResult(_awayScore, _homeScore, points , _awayTeam);
+  MatchResult getAwayResult() {
+    int points = _homeScore == awayScore ? 1 : _homeScore < _awayScore ? 3 : 0;
+    return MatchResult(_awayScore, _homeScore, points, _awayTeam);
   }
 
   bool get finished => _finished;
@@ -59,7 +51,11 @@ class MatchInfo {
     _finished = finalized;
   }
 
-
+  void swapHomeTeam() {
+    var aux = _homeTeam;
+    _homeTeam = _awayTeam;
+    _awayTeam = aux;
+  }
 }
 
 class MatchResult {
@@ -78,6 +74,4 @@ class MatchResult {
   int get goals => _goals;
 
   int get goalsAgainst => _goalsAgainst;
-
-
 }
