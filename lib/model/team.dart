@@ -1,7 +1,6 @@
-class Team{
+class Team {
   String _teamName;
   double _teamPower;
-
 
   Team(this._teamName, this._teamPower);
 
@@ -13,6 +12,4 @@ class Team{
   String toString() {
     return 'Team{_teamName: $_teamName';
   }
-
-
 }

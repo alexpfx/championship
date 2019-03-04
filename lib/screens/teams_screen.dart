@@ -1,6 +1,3 @@
-import 'package:bloc_pattern/bloc_pattern.dart';
-import 'package:championship/bloc/match_simulator_bloc.dart';
-import 'package:championship/bloc/tournament_bloc.dart';
 import 'package:championship/model/team.dart';
 import 'package:championship/model/tournament_setup.dart';
 import 'package:championship/screens/rounds_screen.dart';

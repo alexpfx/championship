@@ -8,7 +8,4 @@ class MatchStatus {
   static const ended = const MatchStatus._internal("Ended");
 
   get name => _name;
-
-
 }
-

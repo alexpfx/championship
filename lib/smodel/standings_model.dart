@@ -4,7 +4,6 @@ import 'package:championship/service/standings_service.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 class StandingsModel extends Model {
-
   List<StandingsRow> _rows = [];
 
   List<StandingsRow> get rows => _rows;
@@ -13,7 +12,7 @@ class StandingsModel extends Model {
     int x = 0;
 
     _rows = buildStandingsRows(rounds);
-    _rows.sort((a,b){
+    _rows.sort((a, b) {
       return b.points.compareTo(a.points);
     });
     _rows.map((s) {
@@ -24,7 +23,7 @@ class StandingsModel extends Model {
     notifyListeners();
   }
 
-  StandingsModel(List<Round> rounds){
+  StandingsModel(List<Round> rounds) {
     update(rounds);
   }
 }

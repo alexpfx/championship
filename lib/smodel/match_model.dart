@@ -42,7 +42,7 @@ class MatchModel extends Model {
     });
   }
 
-  runGame() async{
+  runGame() async {
     int count = 0;
 
     Timer.periodic(Duration(milliseconds: 200), (timer) {
@@ -63,7 +63,8 @@ class MatchModel extends Model {
     if (_currentTime >= _totalTime) {
       _matchInfo.finished = true;
       _matchStatus = MatchStatus.ended;
-      _matchInfo.updateScores(_lastEvent.homeTeamScore, _lastEvent.awayTeamScore);
+      _matchInfo.updateScores(
+          _lastEvent.homeTeamScore, _lastEvent.awayTeamScore);
     }
     notifyListeners();
   }

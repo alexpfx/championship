@@ -26,8 +26,6 @@ class _RoundsScreenState extends State<RoundsScreen> {
 
     tournamentProvider.inputTournamentSetup.add(widget.setup);
 
-
-
     return Scaffold(
       floatingActionButton: new FloatingActionButton(
         onPressed: () {
@@ -60,7 +58,6 @@ class _RoundsScreenState extends State<RoundsScreen> {
           itemCount: snapshot.data.length,
           itemBuilder: (context, index) {
             return _itemBuilder(context, index, _rounds);
-
           });
     } else {
       return Center(child: Text("no data"));

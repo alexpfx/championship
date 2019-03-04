@@ -22,5 +22,4 @@ List<StandingsRow> buildStandingsRows(List<Round> rounds) {
   }
 
   return sMap.values.toList();
-
 }

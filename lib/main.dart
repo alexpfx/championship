@@ -1,8 +1,6 @@
 import 'package:bloc_pattern/bloc_pattern.dart';
 import 'package:championship/bloc/match_simulator_bloc.dart';
 import 'package:championship/bloc/tournament_bloc.dart';
-import 'package:championship/model/tournament_setup.dart';
-import 'package:championship/screens/rounds_screen.dart';
 import 'package:championship/screens/teams_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -11,21 +9,17 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
-
     return BlocProviderList(
-      listBloc: [
-        Bloc(TournamentBloc()),
-        Bloc(MatchSimulatorBloc())
-      ],
-
+      listBloc: [Bloc(TournamentBloc()), Bloc(MatchSimulatorBloc())],
       child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        initialRoute: '/',
-        routes: {
-          '/': (context) => TeamsScreen(title: "Add Teams",),
-        },
-        title: 'Flutter Demo',
+          debugShowCheckedModeBanner: false,
+          initialRoute: '/',
+          routes: {
+            '/': (context) => TeamsScreen(
+                  title: "Add Teams",
+                ),
+          },
+          title: 'Flutter Demo',
           theme: ThemeData(
             // Define the default Brightness and Colors
             brightness: Brightness.dark,
@@ -42,8 +36,7 @@ class MyApp extends StatelessWidget {
               title: TextStyle(fontSize: 36.0, fontStyle: FontStyle.italic),
               body1: TextStyle(fontSize: 14.0, fontFamily: 'Hind'),
             ),
-          )
-      ),
+          )),
     );
   }
 }

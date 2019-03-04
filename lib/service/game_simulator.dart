@@ -106,14 +106,12 @@ class MatchSimulator {
 
   SectorStatus _next(SectorStatus status) => _order[_order.indexOf(status) + 1];
 
-
   void _sendGoal(Team attacker) {
     if (attacker == _match.homeTeam) {
       _homeTeamScore++;
     } else {
       _awayTeamScore++;
     }
-
   }
 
   void chooseSides(Team homeTeam, Team awayTeam) {

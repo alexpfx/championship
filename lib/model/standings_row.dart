@@ -5,7 +5,6 @@ class StandingsRow {
 
   int _position = 0;
 
-
   int _matchPlayed = 0;
 
   int _wins = 0;
@@ -45,7 +44,6 @@ class StandingsRow {
   set position(int value) {
     _position = value;
   }
-
 
   StandingsRow(this._team);
 

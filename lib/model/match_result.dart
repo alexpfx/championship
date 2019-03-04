@@ -13,8 +13,8 @@ class MatchEvent {
 
   int get minute => _minute;
 
-
-  MatchEvent(this._homeTeamScore, this._awayTeamScore, this._match, this._minute);
+  MatchEvent(
+      this._homeTeamScore, this._awayTeamScore, this._match, this._minute);
 
   MatchInfo get match => _match;
 
@@ -32,6 +32,4 @@ class MatchEvent {
   String toString() {
     return 'MatchEvent{_homeTeamScore: $_homeTeamScore, _awayTeamScore: $_awayTeamScore, _minute: $_minute, _match: $_match}';
   }
-
-
 }

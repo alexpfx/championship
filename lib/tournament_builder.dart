@@ -73,7 +73,6 @@ List<Round> _cleanUp(List<Round> rounds) {
     }
   });
 
-
   return List.of(rounds);
 }
 

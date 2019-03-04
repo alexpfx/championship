@@ -14,8 +14,6 @@ class TournamentSetup {
   TournamentRoundMode get roundMode => _roundMode;
 
   TournamentSetup.name(this._teams, this._roundMode, this._type);
-
-
 }
 
 enum TournamentRoundMode {

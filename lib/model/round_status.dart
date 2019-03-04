@@ -8,7 +8,4 @@ class RoundStatus {
   static const ended = const RoundStatus._internal("Ended");
 
   get name => _name;
-
-
 }
-

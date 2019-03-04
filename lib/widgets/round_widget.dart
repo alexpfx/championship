@@ -1,4 +1,3 @@
-import 'package:championship/model/match_info.dart';
 import 'package:championship/model/round.dart';
 import 'package:championship/model/round_status.dart';
 import 'package:championship/smodel/match_model.dart';

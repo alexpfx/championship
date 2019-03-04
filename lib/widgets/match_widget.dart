@@ -7,7 +7,6 @@ class MatchWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-
       shape: Border.all(width: 0.5, color: Theme.of(context).accentColor),
       child: _buildModel(context),
     );
@@ -25,7 +24,9 @@ class MatchWidget extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         Container(
-          decoration: BoxDecoration(color: Theme.of(context).primaryColor, ),
+          decoration: BoxDecoration(
+            color: Theme.of(context).primaryColor,
+          ),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
             child: Row(

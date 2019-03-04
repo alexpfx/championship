@@ -1,7 +1,5 @@
 import 'package:championship/model/round.dart';
-import 'package:championship/model/standings_row.dart';
 import 'package:championship/smodel/standings_model.dart';
-import 'package:championship/tiles/standings_row_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -87,11 +85,10 @@ class StandingsWidget extends StatelessWidget {
 
   _cellt(dynamic value,
       {TextStyle textStyle = const TextStyle(fontWeight: FontWeight.normal)}) {
-
     return Padding(
       padding: EdgeInsets.all(8),
       child: Text(
-        value is String? value: value.toString(),
+        value is String ? value : value.toString(),
         style: textStyle,
       ),
     );

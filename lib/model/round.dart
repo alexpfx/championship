@@ -6,6 +6,7 @@ import 'package:championship/model/tournament_setup.dart';
 class Round {
   List<MatchInfo> _matches;
   Random _random = Random.secure();
+
   List<MatchInfo> get matches => _matches;
 
   String _name;
@@ -29,10 +30,9 @@ class Round {
 
   void shuffleHomeTeam() {
     _matches.forEach((m) {
-      if (_random.nextBool()){
+      if (_random.nextBool()) {
         m.swapHomeTeam();
       }
     });
   }
-
 }

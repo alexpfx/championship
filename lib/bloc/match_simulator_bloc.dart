@@ -11,17 +11,17 @@ class MatchSimulatorBloc implements BlocBase {
   final StreamController<MatchEvent> _matchEventController =
       StreamController<MatchEvent>();
 
-  final StreamController<MatchSimulator> _matchSimulatorController = StreamController<MatchSimulator>();
+  final StreamController<MatchSimulator> _matchSimulatorController =
+      StreamController<MatchSimulator>();
 
   Sink<MatchInfo> get inMatchInfo => _matchController.sink;
 
-  Stream<MatchEvent> get outMatchEvent => _matchEventController.stream.asBroadcastStream();
-
+  Stream<MatchEvent> get outMatchEvent =>
+      _matchEventController.stream.asBroadcastStream();
 
   MatchSimulatorBloc() {
     _matchController.stream.asBroadcastStream().listen(_onMatchAdd);
   }
-
 
   @override
   void dispose() {
@@ -34,5 +34,4 @@ class MatchSimulatorBloc implements BlocBase {
     MatchSimulator s = new MatchSimulator(match);
     _matchSimulatorController.add(s);
   }
-
 }

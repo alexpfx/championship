@@ -3,7 +3,8 @@ class SectorStatus {
   final _defenseInfluence;
   final _attackInfluence;
 
-  const SectorStatus._internal(this._name, this._defenseInfluence, this._attackInfluence);
+  const SectorStatus._internal(
+      this._name, this._defenseInfluence, this._attackInfluence);
 
   static const goal = const SectorStatus._internal("goal", 0, 0);
 
@@ -19,7 +20,6 @@ class SectorStatus {
   static const neutral = const SectorStatus._internal("neutral", 0.5, 0.5);
 
   get attackInfluence => _attackInfluence;
-
 
   get defenseInfluence => _defenseInfluence;
 
