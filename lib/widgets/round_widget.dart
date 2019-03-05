@@ -10,7 +10,7 @@ class RoundWidget extends StatelessWidget {
   RoundModel _roundModel;
 
   var defaultTextStyle =
-      TextStyle(fontWeight: FontWeight.bold, color: Colors.blue, fontSize: 18);
+      TextStyle(fontWeight: FontWeight.bold, fontSize: 18);
 
   RoundWidget(Round _round) {
     _roundModel = RoundModel(_round);

@@ -4,7 +4,18 @@ import 'package:championship/bloc/tournament_bloc.dart';
 import 'package:championship/screens/teams_screen.dart';
 import 'package:flutter/material.dart';
 
+import 'colors.dart';
+
 void main() => runApp(MyApp());
+
+ThemeData buildThemeData() {
+  var baseTheme = ThemeData.dark();
+
+  return baseTheme.copyWith(
+
+
+  );
+}
 
 class MyApp extends StatelessWidget {
   @override
@@ -20,23 +31,7 @@ class MyApp extends StatelessWidget {
                 ),
           },
           title: 'Flutter Demo',
-          theme: ThemeData(
-            // Define the default Brightness and Colors
-            brightness: Brightness.dark,
-            primaryColor: Colors.lightBlue[800],
-            accentColor: Colors.cyan[600],
-
-            // Define the default Font Family
-            fontFamily: 'Montserrat',
-
-            // Define the default TextTheme. Use this to specify the default
-            // text styling for headlines, titles, bodies of text, and more.
-            textTheme: TextTheme(
-              headline: TextStyle(fontSize: 40.0, fontWeight: FontWeight.bold),
-              title: TextStyle(fontSize: 36.0, fontStyle: FontStyle.italic),
-              body1: TextStyle(fontSize: 14.0, fontFamily: 'Hind'),
-            ),
-          )),
+          theme: buildThemeData()),
     );
   }
 }

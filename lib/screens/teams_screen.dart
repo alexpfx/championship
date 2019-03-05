@@ -2,7 +2,6 @@ import 'package:championship/model/team.dart';
 import 'package:championship/model/tournament_setup.dart';
 import 'package:championship/screens/rounds_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_fluid_slider/flutter_fluid_slider.dart';
 
 class TeamsScreen extends StatefulWidget {
   TeamsScreen({Key key, this.title}) : super(key: key);
@@ -46,7 +45,7 @@ class _TeamsScreenState extends State<TeamsScreen> {
                         controller: _inputTeamController,
                         validator: validateTeamName,
                         textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 18, color: Colors.grey[500]),
+                        style: TextStyle(fontSize: 18),
                         textCapitalization: TextCapitalization.characters,
                         decoration: InputDecoration(
                             hintText: "Team Name",
@@ -65,18 +64,19 @@ class _TeamsScreenState extends State<TeamsScreen> {
                 SizedBox(
                   height: _defaultHeightSpace,
                 ),
-                FluidSlider(
-                  labelsTextStyle: TextStyle(fontSize: 12),
-                  valueTextStyle: TextStyle(fontSize: 12),
-                  value: double.parse(_attackPower.toString()),
-                  min: 30,
-                  max: 99,
-                  onChanged: (newValue) {
-                    print('changed');
+                Slider(
+                label: "team power: $_attackPower",
+                  divisions: 10,
+                  activeColor: Theme.of(context).accentColor,
+                  onChanged: (value){
                     setState(() {
-                      this._attackPower = newValue;
+                      _attackPower = value;
                     });
                   },
+
+                  value: _attackPower,
+                  min: 30,
+                  max: 90
                 ),
                 SizedBox(
                   height: 8,
@@ -105,8 +105,6 @@ class _TeamsScreenState extends State<TeamsScreen> {
                     RaisedButton.icon(
                       icon: Icon(Icons.input),
                       label: Text("Confirm"),
-                      color: Theme.of(context).primaryColor,
-                      textColor: Colors.white,
                       onPressed: () {
                         confirmTeams(context);
                       },
@@ -210,7 +208,6 @@ class _TeamsScreenState extends State<TeamsScreen> {
         ),
         new RaisedButton(
             child: Text("Yes"),
-            textColor: Colors.white,
             onPressed: () {
 //              Navigator.of(context).pushNamed("/rounds");
               Navigator.of(context).push(MaterialPageRoute(

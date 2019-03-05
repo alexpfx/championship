@@ -19,7 +19,7 @@ class StandingsWidget extends StatelessWidget {
   }
 
   TextStyle headerStyle =
-      TextStyle(fontWeight: FontWeight.bold, color: Colors.white);
+      TextStyle(fontWeight: FontWeight.bold);
 
   TextStyle boldStyle = TextStyle(fontWeight: FontWeight.bold);
 
@@ -37,7 +37,7 @@ class StandingsWidget extends StatelessWidget {
       columnWidths: {1: FixedColumnWidth(120)},
       defaultVerticalAlignment: TableCellVerticalAlignment.middle,
       border: TableBorder.symmetric(
-        inside: BorderSide(color: Colors.black12, width: 1),
+        inside: BorderSide(color: Theme.of(context).primaryColor, width: 1),
       ),
       children: _buildTableRows(model),
     );
@@ -48,9 +48,9 @@ class StandingsWidget extends StatelessWidget {
       TableRow(
           decoration: BoxDecoration(
               gradient:
-                  LinearGradient(colors: [Colors.blue, Colors.blueAccent])),
+                  LinearGradient(colors: [Theme.of(context).primaryColorDark, Theme.of(context).primaryColorLight])),
           children: [
-            _cellt("", textStyle: headerStyle),
+            _cellt("#", textStyle: headerStyle),
             _cellt("Team", textStyle: headerStyle),
             _cellt("Pts", textStyle: headerStyle),
             _cellt("MP", textStyle: headerStyle),

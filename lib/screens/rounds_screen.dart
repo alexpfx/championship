@@ -6,6 +6,7 @@ import 'package:championship/model/tournament_setup.dart';
 import 'package:championship/widgets/round_widget.dart';
 import 'package:championship/widgets/standings_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:championship/main.dart';
 
 class RoundsScreen extends StatefulWidget {
   TournamentSetup setup;

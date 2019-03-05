@@ -1,4 +1,4 @@
-- não deixar o primeiro time ser sempre o primeiro jogo do round
+ok - não deixar o primeiro time ser sempre o primeiro jogo do round
 
 - melhorar design da tabela de classificacao
 
@@ -8,8 +8,7 @@
 
 - substituir bloc por scoped model (criação de rounds). 
 
-- implementar bottom sheet com a classificacao do campeonato. 
-
+ok - implementar bottom sheet com a classificacao do campeonato.
 
 ok - times com nome grande estão quebrando
 
