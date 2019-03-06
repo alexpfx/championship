@@ -1,12 +1,10 @@
-import 'package:bloc_pattern/bloc_pattern.dart';
-import 'package:championship/bloc/match_simulator_bloc.dart';
-import 'package:championship/bloc/tournament_bloc.dart';
 import 'package:championship/model/round.dart';
 import 'package:championship/model/tournament_setup.dart';
+import 'package:championship/smodel/tournament_model.dart';
 import 'package:championship/widgets/round_widget.dart';
 import 'package:championship/widgets/standings_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:championship/main.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 class RoundsScreen extends StatefulWidget {
   TournamentSetup setup;
@@ -23,19 +21,12 @@ class _RoundsScreenState extends State<RoundsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var tournamentProvider = BlocProviderList.of<TournamentBloc>(context);
-
-    tournamentProvider.inputTournamentSetup.add(widget.setup);
 
     return Scaffold(
       floatingActionButton: new FloatingActionButton(
         onPressed: () {
-//          _scaffoldKey.currentState.showBottomSheet(_buildStandingsBottomSheet);
-
           showModalBottomSheet(
               context: context, builder: _buildStandingsBottomSheet);
-
-//          showModalBottomSheet(context: context, builder: _buildStandingsBottomSheet);
         },
         child: Icon(Icons.format_list_numbered),
       ),
@@ -43,11 +34,9 @@ class _RoundsScreenState extends State<RoundsScreen> {
       appBar: AppBar(
         title: Text("Rounds and Matches"),
       ),
-      body: BlocProviderList(
-        listBloc: [Bloc(TournamentBloc()), Bloc(MatchSimulatorBloc())],
-        child: StreamBuilder(
-            stream: tournamentProvider.outRoundCreator, builder: _roundBuilder),
-      ),
+      body: FutureBuilder(
+          future: ScopedModel.of<TournamentModel>(context).build(widget.setup),
+          builder: _roundBuilder),
     );
   }
 
