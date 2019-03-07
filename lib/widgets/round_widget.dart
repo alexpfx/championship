@@ -96,11 +96,11 @@ class RoundWidget extends StatelessWidget {
   _colorFromMatchStatus(RoundStatus roundStatus) {
     switch (roundStatus) {
       case RoundStatus.notStarted:
-        return Colors.red;
+        return Colors.white;
       case RoundStatus.started:
-        return Colors.green;
+        return Colors.green[900];
       case RoundStatus.ended:
-        return Colors.blue;
+        return Colors.blue[900];
     }
   }
 }

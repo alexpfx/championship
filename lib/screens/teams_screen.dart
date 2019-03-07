@@ -207,6 +207,7 @@ class _TeamsScreenState extends State<TeamsScreen> {
           },
         ),
         new RaisedButton(
+            color: ButtonTheme.of(context).colorScheme.background,
             child: Text("Yes"),
             onPressed: () {
 //              Navigator.of(context).pushNamed("/rounds");

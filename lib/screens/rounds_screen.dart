@@ -28,7 +28,7 @@ class _RoundsScreenState extends State<RoundsScreen> {
           showModalBottomSheet(
               context: context, builder: _buildStandingsBottomSheet);
         },
-        child: Icon(Icons.format_list_numbered),
+        child: Icon(Icons.format_list_numbered, color: Colors.white,),
       ),
       key: _scaffoldKey,
       appBar: AppBar(

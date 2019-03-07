@@ -1,13 +1,22 @@
-ok - não deixar o primeiro time ser sempre o primeiro jogo do round
+- titulo da tela de entrada: 'Teams'
+- remover campo de nome do time da tela de 'teams'
+- adicionar opção de 'editar' um time.
+- obter times do campeonato brasileiro do servidor.
+- adicionar label no campo força do time.
+- na tela round and matches, quando rotaciona os jogos são reiniciados.
+- mostrar classificação mesmo se campeonato não foi iniciado
+- mover botão classificação para a action bar
+- ao voltar para a tela de times não pode mostrar a dialog 
+- adicionar botão 'remover todos' os times.
+- adicionar botão recarregar times padrão
+- adicionar escudo do time. 
 
-- melhorar design da tabela de classificacao
 
-- melhorar design da lista de jogos
 
 - nao deixar startar se jogo ja finalizado. 
 
-- substituir bloc por scoped model (criação de rounds). 
-
+ok - não deixar o primeiro time ser sempre o primeiro jogo do round
+ok - substituir bloc por scoped model (criação de rounds). 
 ok - implementar bottom sheet com a classificacao do campeonato.
 
 ok - times com nome grande estão quebrando
@@ -19,3 +28,7 @@ ok - mostrar estatus dos rounds
 ok - executar todos os steps até o final do jogo de maneira assincrona.
 ok- tornar simulador e matchs assincronos.
 ok- adicionar informações de eventos na tela de match.  
+
+ok - melhorar design da tabela de classificacao
+
+ok - melhorar design da lista de jogos

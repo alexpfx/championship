@@ -7,7 +7,6 @@ class MatchWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      shape: Border.all(width: 0.5, color: Theme.of(context).accentColor),
       child: _buildModel(context),
     );
   }
@@ -121,11 +120,11 @@ class MatchWidget extends StatelessWidget {
   _colorFromMatchStatus(MatchStatus matchStatus) {
     switch (matchStatus) {
       case MatchStatus.notStarted:
-        return Colors.red;
+        return Colors.grey[900];
       case MatchStatus.running:
-        return Colors.green;
+        return Colors.green[900];
       case MatchStatus.ended:
-        return Colors.blue;
+        return Colors.blue[900];
     }
   }
 }
