@@ -12,18 +12,13 @@ ThemeData buildThemeData() {
   var baseTheme = ThemeData.dark();
 
   return baseTheme.copyWith(
-    accentColor: Colors.red[900],
-    primaryColor: Colors.green,
-    dialogTheme: DialogTheme(
-
-    ),
-    buttonTheme: ButtonThemeData().copyWith(
-      textTheme: ButtonTextTheme.primary,
-      buttonColor: Colors.red[900],
-
-    )
-
-  );
+      accentColor: Colors.red[900],
+      primaryColor: Colors.green,
+      dialogTheme: DialogTheme(),
+      buttonTheme: ButtonThemeData().copyWith(
+        textTheme: ButtonTextTheme.primary,
+        buttonColor: Colors.red[900],
+      ));
 }
 
 class MyApp extends StatelessWidget {
@@ -37,11 +32,9 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             initialRoute: '/',
             routes: {
-              '/': (context) => TeamsScreen(
-                    title: "Add Teams",
-                  ),
+              '/': (context) => TeamsScreen(),
             },
-            title: 'Flutter Demo',
+            title: 'Simulador Campeonato Brasileiro',
             theme: buildThemeData()),
       ),
     );

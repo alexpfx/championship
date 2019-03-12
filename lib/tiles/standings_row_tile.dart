@@ -22,7 +22,7 @@ class StandingsRowTile extends StatelessWidget {
           children: <Widget>[
             SizedBox(
                 child: Text(
-              'Pos &',
+              'Pos #',
               style: headerStyle,
             )),
             Expanded(

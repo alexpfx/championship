@@ -1,12 +1,15 @@
 import 'package:championship/model/team.dart';
 import 'package:championship/model/tournament_setup.dart';
 import 'package:championship/screens/rounds_screen.dart';
+import 'package:championship/smodel/teams_model.dart';
+import 'package:championship/tiles/team_tile.dart';
 import 'package:flutter/material.dart';
+import 'package:scoped_model/scoped_model.dart';
 
 class TeamsScreen extends StatefulWidget {
-  TeamsScreen({Key key, this.title}) : super(key: key);
+  TeamsScreen() : super();
 
-  final String title;
+  final String title = "Teams";
 
   @override
   _TeamsScreenState createState() => _TeamsScreenState();
@@ -17,6 +20,7 @@ class _TeamsScreenState extends State<TeamsScreen> {
 
   var _inputTeamController = TextEditingController();
   var _teamList = <Team>[];
+
   final double _defaultHeightSpace = 8;
   double _attackPower = 70;
 
@@ -26,102 +30,125 @@ class _TeamsScreenState extends State<TeamsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        key: _scaffoldKey,
-        resizeToAvoidBottomPadding: false,
-        appBar: AppBar(
-          title: Text(widget.title),
-        ),
-        body: Form(
-          key: _formKey,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: TextFormField(
-                        controller: _inputTeamController,
-                        validator: validateTeamName,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 18),
-                        textCapitalization: TextCapitalization.characters,
-                        decoration: InputDecoration(
-                            hintText: "Team Name",
-                            hintStyle: TextStyle(fontSize: 18),
-                            suffixIcon: IconButton(
-                              icon: Icon(Icons.clear),
-                              iconSize: 24,
-                              onPressed: () {
-                                _inputTeamController.clear();
-                              },
-                            )),
-                      ),
-                    )
-                  ],
-                ),
-                SizedBox(
-                  height: _defaultHeightSpace,
-                ),
-                Slider(
-                label: "team power: $_attackPower",
-                  divisions: 10,
-                  activeColor: Theme.of(context).accentColor,
-                  onChanged: (value){
-                    setState(() {
-                      _attackPower = value;
-                    });
-                  },
-
-                  value: _attackPower,
-                  min: 30,
-                  max: 90
-                ),
-                SizedBox(
-                  height: 8,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    FlatButton.icon(
-                        onPressed: addTeam,
-                        icon: Icon(Icons.done),
-                        label: Text("Add Team")),
-                  ],
-                ),
-                SizedBox(
-                  height: _defaultHeightSpace,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        Text("Number of teams: "),
-                        Text(_teamList.length.toString()),
-                      ],
-                    ),
-                    RaisedButton.icon(
-                      icon: Icon(Icons.input),
-                      label: Text("Confirm"),
-                      onPressed: () {
-                        confirmTeams(context);
-                      },
-                    )
-                  ],
-                ),
-                SizedBox(
-                  height: _defaultHeightSpace,
-                ),
-                Expanded(
-                    child: ListView.builder(
-                        itemCount: _teamList.length,
-                        itemBuilder: _listViewTeamsBuilder))
-              ],
-            ),
+    return ScopedModel<TeamsModel>(
+      model: TeamsModel(),
+      child: Scaffold(
+          key: _scaffoldKey,
+          resizeToAvoidBottomPadding: false,
+          appBar: AppBar(
+            title: Text(widget.title),
           ),
-        ));
+          body: Form(
+            key: _formKey,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: TextFormField(
+                          controller: _inputTeamController,
+                          validator: validateTeamName,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 18),
+                          textCapitalization: TextCapitalization.characters,
+                          decoration: InputDecoration(
+                              hintText: "Team Name",
+                              hintStyle: TextStyle(fontSize: 18),
+                              suffixIcon: IconButton(
+                                icon: Icon(Icons.clear),
+                                iconSize: 24,
+                                onPressed: () {
+                                  _inputTeamController.clear();
+                                },
+                              )),
+                        ),
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    height: _defaultHeightSpace,
+                  ),
+                  Slider(
+                      label: "team power: $_attackPower",
+                      divisions: 10,
+                      activeColor: Theme.of(context).accentColor,
+                      onChanged: (value) {
+                        setState(() {
+                          _attackPower = value;
+                        });
+                      },
+                      value: _attackPower,
+                      min: 30,
+                      max: 90),
+                  SizedBox(
+                    height: 8,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      FlatButton.icon(
+                          onPressed: addTeam,
+                          icon: Icon(Icons.done),
+                          label: Text("Add Team")),
+                    ],
+                  ),
+                  SizedBox(
+                    height: _defaultHeightSpace,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Row(
+                        children: <Widget>[
+                          Text("Number of teams: "),
+                          Text(_teamList.length.toString()),
+                        ],
+                      ),
+                      RaisedButton.icon(
+                        icon: Icon(Icons.input),
+                        label: Text("Confirm"),
+                        onPressed: () {
+                          confirmTeams(context);
+                        },
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    height: _defaultHeightSpace,
+                  ),
+                  ScopedModelDescendant<TeamsModel>(
+                    builder:
+                        (BuildContext context, Widget child, TeamsModel model) {
+                      if (model.isLoading) {
+                        return Expanded(
+                          child: Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                        );
+                      } else {
+                        _teamList = model.teams;
+                        return Expanded(
+                          child: ListView.builder(
+                              itemCount: _teamList.length,
+                              itemBuilder: _listViewTeamsBuilder),
+                        );
+                      }
+                    },
+                  )
+                ],
+              ),
+            ),
+          )),
+    );
+  }
+
+  Widget _listViewTeamsBuilder(BuildContext context, int index) {
+    var team = _teamList[index];
+
+    return _teamTileItem(
+        team, index);
   }
 
   String validateTeamName(String name) {
@@ -136,25 +163,7 @@ class _TeamsScreenState extends State<TeamsScreen> {
         : "Invalid Team Name. Should have more than 2 characters length";
   }
 
-  Widget _teamTileItem(teamName, power, position) => ListTile(
-        title: Text(teamName),
-        dense: true,
-        subtitle: Text('Team Power: $power'),
-        trailing: IconButton(
-            icon: Icon(Icons.delete),
-            onPressed: () {
-              setState(() {
-                _teamList.removeAt(position);
-              });
-            }),
-      );
-
-  Widget _listViewTeamsBuilder(BuildContext context, int index) {
-    var team = _teamList[index];
-
-    return _teamTileItem(
-        team.teamName, team.teamPower.toStringAsFixed(2), index);
-  }
+  Widget _teamTileItem(team, position) => TeamTile(TeamViewModel(team, position));
 
   void confirmTeams(BuildContext context) {
     if (_teamList.isEmpty) {
